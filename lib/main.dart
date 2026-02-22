@@ -55,6 +55,11 @@ class MyApp extends StatelessWidget {
               const Text('Bienvenidos'),
               const Text('Logeate para continuar'),
               Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.1,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                  right: MediaQuery.of(context).size.width * 0.1,
+                ),
                 height: MediaQuery.of(context).size.height * 0.7,
                 color: Colors.white,
                 child: Column(
