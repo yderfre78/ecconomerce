@@ -1,13 +1,11 @@
-import 'package:ecconomerce/src/views/pages/auth/login/login_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -17,7 +15,6 @@ class LoginPage extends ConsumerWidget {
             colors: [Color.fromARGB(255, 212, 219, 223), Colors.blueAccent],
           ),
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -28,9 +25,9 @@ class LoginPage extends ConsumerWidget {
                 left: MediaQuery.of(context).size.width * 0.1,
               ),
               child: Text(
-                'Hola',
+                'Comienza Creando Tu',
                 style: TextStyle(
-                  fontSize: 35,
+                  fontSize: 27,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -39,63 +36,75 @@ class LoginPage extends ConsumerWidget {
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.01,
                 left: MediaQuery.of(context).size.width * 0.1,
               ),
               child: Text(
-                'Logeate!',
+                'Cuenta',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 27,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
             ),
-
-            Spacer(),
+            const Spacer(),
             Container(
-              margin: EdgeInsets.only(bottom: 25),
+              height: MediaQuery.of(context).size.height * 0.72,
+              width: MediaQuery.of(context).size.width * 0.95,
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.1,
-                left: MediaQuery.of(context).size.width * 0.1,
-                right: MediaQuery.of(context).size.width * 0.1,
+                top: MediaQuery.of(context).size.width * 0.12,
+                left: MediaQuery.of(context).size.width * 0.08,
+                right: MediaQuery.of(context).size.width * 0.08,
               ),
-              height: MediaQuery.of(context).size.height * 0.7,
+              margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.05,
+                right: MediaQuery.of(context).size.width * 0.05,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(50),
               ),
+              alignment: Alignment.centerLeft,
               child: Column(
                 children: [
                   TextFormField(
-                    onChanged: (value) {
-                      ref.read(loginProvider.notifier).onEmailChanged(value);
-                    },
                     decoration: InputDecoration(
-                      hintText: 'Email',
+                      labelText: 'Nombre',
+                      suffixIcon: Icon(Icons.person, color: Colors.blueAccent),
+                    ),
+                  ),
+                    TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Apellido',
+                      suffixIcon: Icon(Icons.person, color: Colors.blueAccent),
+                    ),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'telefono o Correo ',
                       suffixIcon: Icon(Icons.email, color: Colors.blueAccent),
                     ),
                   ),
-                  SizedBox(height: 20),
                   TextFormField(
-                    onChanged: (value) {
-                      ref.read(loginProvider.notifier).onPasswordChanged(value);
-                    },
+                    obscureText: true,
                     decoration: InputDecoration(
-                      hintText: 'Password',
-
+                      labelText: 'Contraseña',
                       suffixIcon: Icon(Icons.lock, color: Colors.blueAccent),
                     ),
+                  ),
+                  TextFormField(
                     obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Confirmar Contraseña',
+                      suffixIcon: Icon(Icons.lock, color: Colors.blueAccent),
+                    ),
                   ),
+                  SizedBox(height: 50),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
-                    alignment: Alignment.centerRight,
-                    child: Text('Olvidaste tu password?'),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    margin: EdgeInsets.only(top: 30),
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width ,
+
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -105,18 +114,20 @@ class LoginPage extends ConsumerWidget {
                       ),
                       borderRadius: BorderRadius.circular(30),
                     ),
+
                     child: FilledButton(
                       onPressed: () {
-                 
-                        ref.read(loginProvider.notifier).loginProvider();
-              
+                        context.go('/register');
                       },
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.transparent,
                       ),
-                      child: const Text(
-                        'INGRESAR',
-                        style: TextStyle(fontSize: 28),
+                      child: Text(
+                        'REGISTRARSE',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: const Color.fromARGB(255, 2, 43, 156),
+                        ),
                       ),
                     ),
                   ),
@@ -124,25 +135,27 @@ class LoginPage extends ConsumerWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'No tiene Cuenta?',
+                      'Ya tienes Cuenta?',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(bottom: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        context.go('/register');
-                      },
-                      child: Text(
-                        'Registrate ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    margin: EdgeInsets.only(bottom: 10),
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      'Registrate',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
                     ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(bottom: 30),
                   ),
                 ],
               ),
