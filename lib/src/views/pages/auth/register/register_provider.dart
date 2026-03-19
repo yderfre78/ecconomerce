@@ -58,9 +58,13 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
   }
 
   Future<void> loginProvider() async {
-    final response = await repository.login(
+    final response = await repository.register(
+      name: state.name,
+      lastname: state.lastname,
+
       email: state.email,
       password: state.password,
+      confirmPassword: state.confirmPassword,
     );
     print('Response ${response.toJson()}');
     print("email: ${state.email}");
