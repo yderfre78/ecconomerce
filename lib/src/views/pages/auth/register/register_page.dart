@@ -1,11 +1,13 @@
+import 'package:ecconomerce/src/views/pages/auth/register/register_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends ConsumerWidget {
   const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -69,24 +71,49 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
+                    onChanged: (value) {
+                      ref.read(registerProvider.notifier).onNameChanged(value);
+                    },
                     decoration: InputDecoration(
                       labelText: 'Nombre',
                       suffixIcon: Icon(Icons.person, color: Colors.blueAccent),
                     ),
                   ),
-                    TextFormField(
+                  TextFormField(
+                    onChanged: (value) {
+                      ref
+                          .read(registerProvider.notifier)
+                          .onlastnamelChanged(value);
+                    },
                     decoration: InputDecoration(
                       labelText: 'Apellido',
                       suffixIcon: Icon(Icons.person, color: Colors.blueAccent),
                     ),
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      ref.read(registerProvider.notifier).onEmailChanged(value);
+                    },
                     decoration: InputDecoration(
-                      labelText: 'telefono o Correo ',
+                      labelText: 'Correo ',
                       suffixIcon: Icon(Icons.email, color: Colors.blueAccent),
                     ),
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      ref.read(registerProvider.notifier).onPhoneChanged(value);
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'telefono',
+                      suffixIcon: Icon(Icons.phone, color: Colors.blueAccent),
+                    ),
+                  ),
+                  TextFormField(
+                    onChanged: (value) {
+                      ref
+                          .read(registerProvider.notifier)
+                          .onPasswordChanged(value);
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Contraseña',
@@ -94,6 +121,11 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      ref
+                          .read(registerProvider.notifier)
+                          .onConfirmPasswordChanged(value);
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Confirmar Contraseña',
@@ -103,7 +135,7 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(height: 50),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width ,
+                    width: MediaQuery.of(context).size.width,
 
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -117,7 +149,7 @@ class RegisterPage extends StatelessWidget {
 
                     child: FilledButton(
                       onPressed: () {
-                        context.go('/register');
+                        ref.read(registerProvider.notifier).registerPovider();
                       },
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.transparent,

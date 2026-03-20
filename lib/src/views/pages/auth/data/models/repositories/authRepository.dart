@@ -18,8 +18,25 @@ class Authrepository {
     return AuthResponse.fromJson(response.data);
   }
 
-  Future<AuthResponse> register(User user) async {
-    final response = await dio.post('auth/register', data: user);
+  Future<AuthResponse> register({
+    required String name,
+    required String lastname,
+    required String phone,
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    final response = await dio.post(
+      'auth/register',
+      data: {
+        'name': name,
+        'lastname': lastname,
+        'phone': phone,
+        'email': email,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      },
+    );
     return AuthResponse.fromJson(response.data);
   }
 }

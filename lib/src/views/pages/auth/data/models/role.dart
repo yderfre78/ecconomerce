@@ -2,13 +2,13 @@ class Role {
   String id;
   String name;
   String route;
-  String image;
+  String? image;
 
   Role({
     required this.id,
     required this.name,
     required this.route,
-    required this.image,
+    this.image,
   });
 
   factory Role.fromJson(Map<String, dynamic> json) => Role(

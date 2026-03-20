@@ -1,16 +1,18 @@
 import 'package:ecconomerce/src/views/pages/auth/data/models/repositories/authRepository.dart';
+import 'package:ecconomerce/src/views/pages/auth/data/providerss/authRepositoryProvider.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 class RegisterState {
   final String name;
   final String lastname;
-
+  final String phone;
   final String email;
   final String password;
   final String confirmPassword;
 
   RegisterState({
     this.email = "",
+    this.phone = "",
     this.password = "",
     this.lastname = "",
     this.name = "",
@@ -21,12 +23,15 @@ class RegisterState {
     String? email,
     String? password,
     String? name,
+    String? phone,
+
     String? lastname,
     String? confirmPassword,
   }) {
     return RegisterState(
       name: name ?? this.name,
       lastname: lastname ?? this.lastname,
+      phone: phone ?? this.phone,
       email: email ?? this.email,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
@@ -35,7 +40,8 @@ class RegisterState {
 }
 
 class RegisterNotifier extends StateNotifier<RegisterState> {
-  RegisterNotifier() : super(RegisterState());
+  final Authrepository repository;
+  RegisterNotifier(this.repository) : super(RegisterState());
 
   void onNameChanged(String value) {
     state = state.copyWith(name: value);
@@ -49,6 +55,10 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(email: value);
   }
 
+  void onPhoneChanged(String value) {
+    state = state.copyWith(phone: value);
+  }
+
   void onPasswordChanged(String value) {
     state = state.copyWith(password: value);
   }
@@ -57,22 +67,25 @@ class RegisterNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(confirmPassword: value);
   }
 
-  Future<void> loginProvider() async {
+  Future<void> registerPovider() async {
     final response = await repository.register(
       name: state.name,
       lastname: state.lastname,
-
+      phone: state.phone,
       email: state.email,
       password: state.password,
       confirmPassword: state.confirmPassword,
     );
     print('Response ${response.toJson()}');
     print("email: ${state.email}");
+    print("email: ${state.phone}");
     print("password: ${state.password}");
   }
 }
 
-final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>((ref) {
-  final repository = ref.read(autRepositoryProvider);
-  return LoginNotifier(repository);
-});
+final registerProvider = StateNotifierProvider<RegisterNotifier, RegisterState>(
+  (ref) {
+    final repository = ref.read(autRepositoryProvider);
+    return RegisterNotifier(repository);
+  },
+);
